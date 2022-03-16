@@ -2,19 +2,22 @@
 
 export const ColorTool = () => {
 
+  const headerText = "Color Tool";
+
+  const colors = [
+    { id: 1, name: 'red', hexcode: 'ff0000' },
+    { id: 2, name: 'green', hexcode: '00ff00' },
+    { id: 3, name: 'blue', hexcode: '0000ff' },
+  ];
+
   return (
     <>
       <header>
-        <h1>Color Tool</h1>
+        <h1>{headerText}</h1>
       </header>
       <ul>
-        <li>pink</li>
-        <li>blue</li>
-        <li>red</li>
-        <li>magenta</li>
-        <li>black</li>
-        <li>crimson</li>
-        <li>purple</li>
+        {colors.map(color =>
+          <li key={color.id}>{color.name}</li>)}
       </ul>
     </>
   );
