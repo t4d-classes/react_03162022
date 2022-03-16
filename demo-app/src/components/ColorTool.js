@@ -1,16 +1,10 @@
-
+import { ToolHeader } from "./ToolHeader";
 
 export const ColorTool = (props) => {
 
-  const headerText = "Color Tool";
-
-
-
   return (
     <>
-      <header>
-        <h1>{headerText}</h1>
-      </header>
+      <ToolHeader headerText={props.headerText} />
       <ul>
         {props.colors.map(color =>
           <li key={color.id}>{color.name}</li>)}
