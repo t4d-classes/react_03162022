@@ -9,7 +9,6 @@ export const CarTool = (props) => {
   const [ cars, setCars ] = useState([ ...props.cars ]);
 
   const addCar = newCar => {
-  
     setCars([
       ...cars,
       {
@@ -17,14 +16,17 @@ export const CarTool = (props) => {
         id: Math.max(...cars.map(c => c.id), 0) + 1,
       },
     ]);
-  
+  };
+
+  const deleteCar = carId => {
+    setCars(cars.filter(c => c.id !== carId));
   };
 
 
   return (
     <>
       <ToolHeader headerText="Car Tool" />
-      <CarTable cars={cars} />
+      <CarTable cars={cars} onDeleteCar={deleteCar} />
       <CarForm buttonText="Add Car" onSubmitCar={addCar} />
     </>
   );
