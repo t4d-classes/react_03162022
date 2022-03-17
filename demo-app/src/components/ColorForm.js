@@ -64,5 +64,5 @@ export const ColorForm = (props) => {
 };
 
 ColorForm.defaultProps = {
-  buttonText: 'Submit Form',
+  buttonText: 'Submit Color',
 };
