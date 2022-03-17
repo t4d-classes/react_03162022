@@ -21,7 +21,6 @@ render(
    // ColorTool, { colors: colorList });
  <>
   <ColorTool headerText={colorToolHeaderText} colors={colorList} />
-  <ColorTool headerText={colorToolHeaderText} colors={colorList} />
   <CarTool cars={carsList} />
  </>,
  document.querySelector('#root'),
