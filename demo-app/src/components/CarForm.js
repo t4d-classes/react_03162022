@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useCarFormValidation } from '../hooks/useCarFormValidation';
 
 export const CarForm = (props) => {
 
-  const [ carForm, setCarForm ] = useState({
+  const {
+    carForm, change, resetCarForm,
+    validationMessages,
+  } = useCarFormValidation({
     make: '',
     model: '',
     year: 1900,
@@ -10,29 +13,19 @@ export const CarForm = (props) => {
     price: 0,
   });
 
-  const change = e => {
-    setCarForm({
-      ...carForm,
-      [e.target.name]: e.target.type === 'number'
-        ? e.target.valueAsNumber : e.target.value,
-    });
-  };
-
   const submitCar = () => {
-  
+    if (validationMessages.length > 0) {
+      return;
+    }
     props.onSubmitCar({ ...carForm });
-
-    setCarForm({
-      make: '',
-      model: '',
-      year: 1900,
-      color: '',
-      price: 0,
-    });
-
+    resetCarForm();
   };
 
   return (
+    <>
+    {(validationMessages.length > 0) && <ul>
+      {validationMessages.map((msg, i) => <li key={i}>{msg}</li>)}
+    </ul>}
     <form>
       <label>
         Make:
@@ -61,6 +54,7 @@ export const CarForm = (props) => {
       </label>
       <button type="button" onClick={submitCar}>{props.buttonText}</button>
     </form>
+    </>
   );
 
 };
