@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import {useCarToolStore } from '../hooks/useCarToolStore';
+import { useCarToolStoreAsync } from '../hooks/useCarToolStoreAsync';
 
 
 const carToolStoreContext = createContext();
@@ -11,7 +11,7 @@ export const CarToolStoreProvider = (props) => {
 
 
   return (
-    <Provider value={useCarToolStore()}>
+    <Provider value={useCarToolStoreAsync()}>
       {props.children}
     </Provider>
   );
