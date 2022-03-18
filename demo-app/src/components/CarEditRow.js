@@ -1,34 +1,33 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-export const CarEditRow = props => {
+export const CarEditRow = ({ car, onSaveCar, onCancelCar }) => {
 
   const [ carForm, setCarForm ] = useState({
-    make: props.car.make,
-    model: props.car.model,
-    year: props.car.year,
-    color: props.car.color,
-    price: props.car.price,
+    make: car.make,
+    model: car.model,
+    year: car.year,
+    color: car.color,
+    price: car.price,
   });
 
-  const change = e => {
+  const change = useCallback(e => {
     setCarForm({
       ...carForm,
       [e.target.name]: e.target.type === 'number'
         ? e.target.valueAsNumber : e.target.value,
     });
-  };
+  }, [carForm]);
 
-  const saveCar = () => {
-
-    props.onSaveCar({
+  const saveCar = useCallback(() => {
+    onSaveCar({
       ...carForm,
-      id: props.car.id,
+      id: car.id,
     })
-  };
+  }, [onSaveCar, carForm, car]);
 
   return (
     <tr>
-      <td>{props.car.id}</td>
+      <td>{car.id}</td>
       <td><input type="text" name="make"
           value={carForm.make} onChange={change} /></td>
       <td><input type="text" name="model"
@@ -42,7 +41,7 @@ export const CarEditRow = props => {
       <td>
         <button type="button" onClick={saveCar}>
             Save</button>
-        <button type="button" onClick={props.onCancelCar}>
+        <button type="button" onClick={onCancelCar}>
             Cancel</button>
       </td>
     </tr>  

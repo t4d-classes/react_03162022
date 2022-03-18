@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
+import { Layout } from './components/Layout';
+import { Home } from './components/Home';
+import { ColorTool } from './components/ColorTool';
+import { CarToolStoreProvider } from './contexts/carToolStoreContext';
+import { CarTool } from './components/CarTool';
+
+const colorList = [
+  { id: 1, name: 'red', hexcode: 'ff0000' },
+  { id: 2, name: 'green', hexcode: '00ff00' },
+  { id: 3, name: 'blue', hexcode: '0000ff' },
+];
+
+const colorToolHeaderText = "Color Tool";
+
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="color-tool" element={<ColorTool
+          colors={colorList} headerText={colorToolHeaderText} />} />
+        <Route path="car-tool" element={<CarToolStoreProvider>
+          <CarTool />
+        </CarToolStoreProvider>} />
+      </Route>
+    </Routes>
   );
-}
-
-export default App;
+};

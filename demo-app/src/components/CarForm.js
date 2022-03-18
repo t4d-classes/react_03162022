@@ -1,6 +1,7 @@
+import { memo, useCallback } from 'react';
 import { useCarFormValidation } from '../hooks/useCarFormValidation';
 
-export const CarForm = (props) => {
+export const CarForm = memo(({ buttonText, onSubmitCar }) => {
 
   const {
     carForm, change, resetCarForm,
@@ -13,13 +14,13 @@ export const CarForm = (props) => {
     price: 0,
   });
 
-  const submitCar = () => {
+  const submitCar = useCallback(() => {
     if (validationMessages.length > 0) {
       return;
     }
-    props.onSubmitCar({ ...carForm });
+    onSubmitCar({ ...carForm });
     resetCarForm();
-  };
+  }, [validationMessages, resetCarForm, onSubmitCar, carForm]);
 
   return (
     <>
@@ -52,12 +53,12 @@ export const CarForm = (props) => {
         <input type="number" name="price"
           value={carForm.price} onChange={change} />
       </label>
-      <button type="button" onClick={submitCar}>{props.buttonText}</button>
+      <button type="button" onClick={submitCar}>{buttonText}</button>
     </form>
     </>
   );
 
-};
+});
 
 CarForm.defaultProps = {
   buttonText: 'Submit Car',
