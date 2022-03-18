@@ -1,30 +1,18 @@
-import { useState } from 'react';
-
 import { ToolHeader } from "./ToolHeader";
 import { ColorList } from './ColorList';
 import { ColorForm } from './ColorForm';
 
+import { useList } from "../hooks/useList";
+
 export const ColorTool = (props) => {
 
-  const [ colors, setColors ] = useState([ ...props.colors ]);
-
-  const addColor = newColor => {
-  
-    setColors([
-      ...colors,
-      {
-        ...newColor,
-        id: Math.max(...colors.map(c => c.id), 0) + 1,
-      },
-    ]);
-  
-  };
+  const [ colors, appendColor ] = useList([ ...props.colors ]);
 
   return (
     <>
       <ToolHeader headerText={props.headerText} />
       <ColorList colors={colors} />
-      <ColorForm buttonText="Add Color" onSubmitColor={addColor} />
+      <ColorForm buttonText="Add Color" onSubmitColor={appendColor} />
     </>
   );
 
