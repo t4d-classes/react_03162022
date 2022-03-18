@@ -1,39 +1,22 @@
-import { useState } from 'react';
-
 import { ToolHeader } from "./ToolHeader";
 import { CarTable } from './CarTable';
 import { CarForm } from './CarForm';
 
-import { useList } from '../hooks/useList';
+import {
+  useCarToolStoreContext as  useCarToolStore
+} from '../contexts/carToolStoreContext';
 
-export const CarTool = (props) => {
+export const CarTool = () => {
 
-  const [ cars, appendCar, replaceCar, removeCar ] = useList([ ...props.cars ]);
-
-  const [ editCarId, setEditCarId ] = useState(-1);
-
-  const addCar = newCar => {
-    appendCar(newCar);
-    setEditCarId(-1);
-  };
-
-  const saveCar = car => {
-    replaceCar(car);
-    setEditCarId(-1);
-  };
-
-  const deleteCar = carId => {
-    removeCar(carId);
-    setEditCarId(-1);
-  };
-
-  const cancelCar = () => setEditCarId(-1);
+  const {
+    cars, editCarId, editCar, cancelCar, addCar, saveCar, deleteCar
+  } = useCarToolStore();
 
   return (
     <>
       <ToolHeader headerText="Car Tool" />
       <CarTable cars={cars} editCarId={editCarId}
-        onEditCar={setEditCarId} onDeleteCar={deleteCar}
+        onEditCar={editCar} onDeleteCar={deleteCar}
         onSaveCar={saveCar} onCancelCar={cancelCar} />
       <CarForm buttonText="Add Car" onSubmitCar={addCar} />
     </>
