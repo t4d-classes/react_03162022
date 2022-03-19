@@ -1,11 +1,12 @@
-import { useCallback } from 'react';
-import { useForm } from '../hooks/useForm';
+import { memo, useCallback } from 'react';
+import { useCarFormValidation } from '../hooks/useCarFormValidation';
 
-export const CarForm = ({ buttonText, onSubmitCar }) => {
+export const CarForm = memo(({ buttonText, onSubmitCar }) => {
 
-  const [
+  const {
     carForm, change, resetCarForm,
-  ] = useForm({
+    validationMessages,
+  } = useCarFormValidation({
     make: '',
     model: '',
     year: 1900,
@@ -14,12 +15,18 @@ export const CarForm = ({ buttonText, onSubmitCar }) => {
   });
 
   const submitCar = useCallback(() => {
+    if (validationMessages.length > 0) {
+      return;
+    }
     onSubmitCar({ ...carForm });
     resetCarForm();
-  }, [resetCarForm, onSubmitCar, carForm]);
+  }, [validationMessages, resetCarForm, onSubmitCar, carForm]);
 
   return (
     <>
+    {(validationMessages.length > 0) && <ul>
+      {validationMessages.map((msg, i) => <li key={i}>{msg}</li>)}
+    </ul>}
     <form>
       <label>
         Make:
@@ -51,7 +58,7 @@ export const CarForm = ({ buttonText, onSubmitCar }) => {
     </>
   );
 
-};
+});
 
 CarForm.defaultProps = {
   buttonText: 'Submit Car',

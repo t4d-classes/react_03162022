@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import renderer from 'react-test-renderer';
 
 import { CarViewRow } from '../components/CarViewRow';
@@ -83,4 +84,18 @@ describe('CarViewRow testing library', () => {
     fireEvent.click(screen.getByText('Delete'));
     expect(deleteCarSpy).toHaveBeenCalledWith(1);
   });
+
+  test('click edit 2', () => {
+    renderComponent();
+    // select the button element by text
+    userEvent.click(screen.getByText('Edit'));
+    expect(editCarSpy).toHaveBeenCalledWith(1);
+  });
+
+  test('click delete 2', () => {
+    renderComponent();
+    // select the button element by text
+    userEvent.click(screen.getByText('Delete'));
+    expect(deleteCarSpy).toHaveBeenCalledWith(1);
+  });  
 });
